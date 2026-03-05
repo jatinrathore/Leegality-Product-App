@@ -155,7 +155,7 @@ Applied filters are stored in the URL query parameters. This allows filters to p
 
 ---
 
-7. Preserving Navigation History
+### 7. Preserving Navigation History
 
 Navigation was implemented in a way that preserves the user's browsing history. When a user searches for a product and navigates to its detail page, then searches for another product and navigates again, the browser history stack is maintained correctly. This allows users to use the browser's back button to step through previously visited product pages in the same order they were opened, creating a more natural and intuitive navigation experience.
 
@@ -181,21 +181,10 @@ This would allow large-scale datasets without loading all products.
 Improve the navbar search with:
 
 - keyboard navigation (↑ ↓ Enter)
-- highlighted matching text
 - product thumbnails
 - recent searches
 
----
-
-### 3. Performance Optimizations
-
-- Virtualized product list for large datasets
-- Debounced search API calls
-- Prefetch product detail pages
-
----
-
-### 4. UI Enhancements
+### 3. UI Enhancements
 
 - Better shimmer loading UI for images to prevent empty boxes and improve perceived loading experience.
 - Smooth animations for filters
