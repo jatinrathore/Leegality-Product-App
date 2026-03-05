@@ -1,4 +1,4 @@
-const ProductSkeleton = () => {
+const ProductCardSkeleton = () => {
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-4 animate-pulse">
       <div className="h-36 bg-gray-200 rounded mb-3" />
@@ -14,4 +14,4 @@ const ProductSkeleton = () => {
   );
 };
 
-export default ProductSkeleton;
+export default ProductCardSkeleton;

@@ -9,7 +9,7 @@ const StarRating = ({ rating }: Props) => {
   const hasHalfStar = rating % 1 >= 0.1;
 
   return (
-    <div className="flex items-center gap-[2px]">
+    <div className="flex items-center gap-0.5">
       {/* Full stars */}
       {Array.from({ length: fullStars }).map((_, i) => (
         <StarSolid key={`full-${i}`} className="w-4 h-4 text-yellow-500" />

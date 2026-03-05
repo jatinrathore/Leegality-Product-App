@@ -7,7 +7,6 @@ import { APIQueries } from "../api/queries";
 
 import ProductCard from "../components/product-card";
 import Pagination from "../components/pagination";
-import ProductSkeleton from "../components/product-skeleton";
 import EmptyPage from "../components/empty-page";
 import FilterSheet from "../components/filter-sheet";
 
@@ -20,6 +19,7 @@ import type {
   PaginatedResponse,
 } from "../api/resources/product/types";
 import AppliedFilters from "../components/applied-filters";
+import ProductCardSkeleton from "../components/skeletons/product-card";
 
 const LIMIT = 10;
 
@@ -174,7 +174,7 @@ const ProductListPage = () => {
         />
 
         <div>
-          <div className="flex items-center mb-4">
+          <div className="flex sm:items-center mb-4 flex-col sm:flex-row items-start gap-4">
             <button
               onClick={() => setFiltersOpen((prev) => !prev)}
               className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-700 shadow-sm hover:bg-gray-100 hover:shadow transition-all duration-200 cursor-pointer"
@@ -186,26 +186,29 @@ const ProductListPage = () => {
             <AppliedFilters filters={filters} onFilterChange={updateFilters} />
           </div>
 
-          <div
-            className={clsx(
-              "grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4",
-              {
-                "md:grid-cols-2! lg:grid-cols-3! xl:grid-cols-4!": filtersOpen,
-                "block!": isEmpty,
-              },
-            )}
-          >
-            {isLoading &&
-              Array.from({ length: LIMIT }).map((_, i) => (
-                <ProductSkeleton key={i} />
-              ))}
+          <div className="">
+            <div
+              className={clsx(
+                "grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4",
+                {
+                  "md:grid-cols-2! lg:grid-cols-3! xl:grid-cols-4!":
+                    filtersOpen,
+                  "block!": isEmpty,
+                },
+              )}
+            >
+              {isLoading &&
+                Array.from({ length: LIMIT }).map((_, i) => (
+                  <ProductCardSkeleton key={i} />
+                ))}
 
-            {isEmpty && <EmptyPage />}
+              {isEmpty && <EmptyPage />}
 
-            {!isLoading &&
-              paginatedProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
+              {!isLoading &&
+                paginatedProducts.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+            </div>
           </div>
 
           <div className="flex justify-center m-8">

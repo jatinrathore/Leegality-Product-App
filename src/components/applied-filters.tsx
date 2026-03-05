@@ -18,7 +18,7 @@ const AppliedFilters = ({ filters, onFilterChange }: Props) => {
   if (!hasFilters) return null;
 
   return (
-    <div className="flex flex-wrap items-center gap-2 ml-3">
+    <div className="flex flex-wrap sm:items-center gap-2 ml-3 flex-col sm:flex-row items-start">
       {filters.search && (
         <Chip
           label={`Search: ${filters.search}`}

@@ -19,7 +19,7 @@ export const ProductQueryKey = createQueryKeys("products", {
 
 type Resource = {
   list: PaginatedAPIFn<Product>;
-  detail: APIFn<Product, { id: number | string }>;
+  detail: APIFn<Product, { id: string }>;
   categories: APIFn<ProductCategory[]>;
 };
 

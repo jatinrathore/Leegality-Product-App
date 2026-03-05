@@ -1,3 +1,11 @@
+export type Review = {
+  rating: number;
+  comment: string;
+  date: string;
+  reviewerName: string;
+  reviewerEmail: string;
+};
+
 export type Product = {
   id: number;
   title: string;
@@ -8,6 +16,7 @@ export type Product = {
   category: string;
   thumbnail: string;
   images: string[];
+  reviews: Review[];
 };
 
 export type ProductCategory = {
