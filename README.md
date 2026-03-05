@@ -197,6 +197,7 @@ Improve the navbar search with:
 
 ### 4. UI Enhancements
 
+- Better shimmer loading UI for images to prevent empty boxes and improve perceived loading experience.
 - Smooth animations for filters
 - Better mobile responsive layouts
 - Add image gallery thumbnails and zoom support on the product detail page for a richer product viewing experience.

@@ -142,7 +142,7 @@ const ProductDetailPage = () => {
               </p>
             </div>
 
-            <div className="border-t my-6" />
+            <div className="border-t my-6 border-gray-300" />
 
             <div>
               <h2 className="font-semibold text-lg mb-2">Description</h2>
@@ -151,7 +151,7 @@ const ProductDetailPage = () => {
               </p>
             </div>
 
-            <div className="border-t my-6" />
+            <div className="border-t my-6 border-gray-300" />
 
             <div>
               <h2 className="font-semibold text-lg mb-3">Reviews</h2>
