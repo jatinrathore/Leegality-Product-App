@@ -15,12 +15,17 @@ export const ProductQueryKey = createQueryKeys("products", {
   categories: () => ({
     queryKey: ["product-categories"],
   }),
+
+  search: (query: string) => ({
+    queryKey: ["products-search", query],
+  }),
 });
 
 type Resource = {
   list: PaginatedAPIFn<Product>;
   detail: APIFn<Product, { id: string }>;
   categories: APIFn<ProductCategory[]>;
+  search: PaginatedAPIFn<Product>;
 };
 
 export const ProductResource: Resource = {
@@ -31,4 +36,7 @@ export const ProductResource: Resource = {
 
   categories: (config) =>
     axios.get("/products/categories", config).then((res) => res.data),
+
+  search: (config) =>
+    axios.get("/products/search", config).then((res) => res.data),
 };

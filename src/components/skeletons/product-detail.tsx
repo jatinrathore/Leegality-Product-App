@@ -4,7 +4,7 @@ const ProductDetailSkeleton = () => {
       <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-md p-6">
         <div className="grid md:grid-cols-2 gap-10 animate-pulse">
           <div className="flex justify-center items-center">
-            <div className="w-155 h-130 bg-gray-200 rounded-lg" />
+            <div className="w-full sm:w-155 h-130 bg-gray-200 rounded-lg" />
           </div>
 
           <div className="space-y-4">
