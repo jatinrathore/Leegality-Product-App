@@ -1,22 +1,73 @@
 import clsx from "clsx";
 import { Search, Xmark } from "iconoir-react";
+import type { ProductCategory } from "../api/resources/product/types";
+import { useEffect, useState } from "react";
+
+type Filters = {
+  search: string;
+  categories: string[];
+  brands: string[];
+  minPrice?: number;
+  maxPrice?: number;
+  page: number;
+};
 
 type Props = {
   open: boolean;
   onClose: () => void;
+  categories: ProductCategory[];
+  brands: string[];
+  filters: Filters;
+  onFilterChange: (updates: Partial<Filters>) => void;
 };
 
-const FilterSheet = ({ open, onClose }: Props) => {
+const FilterSheet = ({
+  open,
+  onClose,
+  categories,
+  brands,
+  filters,
+  onFilterChange,
+}: Props) => {
+  const [price, setPrice] = useState<{ min: string; max: string }>({
+    min: filters.minPrice?.toString() ?? "",
+    max: filters.maxPrice?.toString() ?? "",
+  });
+
+  const toggleCategory = (slug: string) => {
+    const updated = filters.categories.includes(slug)
+      ? filters.categories.filter((c) => c !== slug)
+      : [...filters.categories, slug];
+
+    onFilterChange({ categories: updated });
+  };
+
+  const toggleBrand = (brand: string) => {
+    const updated = filters.brands.includes(brand)
+      ? filters.brands.filter((b) => b !== brand)
+      : [...filters.brands, brand];
+
+    onFilterChange({ brands: updated });
+  };
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setPrice({
+      min: filters.minPrice?.toString() ?? "",
+      max: filters.maxPrice?.toString() ?? "",
+    });
+  }, [filters.minPrice, filters.maxPrice]);
+
   return (
     <div
       className={clsx(
-        "bg-[#F3F3F4] rounded-lg p-5 h-fit sticky top-6 transition-all duration-300 min-h-screen z-10",
+        "bg-[#F3F3F4] rounded-lg p-5 h-fit sticky top-6 transition-all duration-300 min-h-screen z-10 flex flex-col gap-6",
         open
           ? "translate-x-0 opacity-100"
           : "-translate-x-80 opacity-0 pointer-events-none",
       )}
     >
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex justify-between items-center">
         <h2 className="font-semibold">Filters</h2>
 
         <button
@@ -37,8 +88,84 @@ const FilterSheet = ({ open, onClose }: Props) => {
         <input
           type="text"
           placeholder="Search products..."
-          className="h-9 pl-9 pr-3 border border-gray-200 rounded-md text-black outline-none bg-white"
+          value={filters.search}
+          onChange={(e) => onFilterChange({ search: e.target.value })}
+          className="h-9 w-full pl-9 pr-3 border border-gray-200 rounded-md text-black outline-none bg-white"
         />
+      </div>
+
+      <div>
+        <h3 className="text-sm font-semibold mb-2">Categories</h3>
+
+        <div className="space-y-2 max-h-40 overflow-y-auto pr-1">
+          {categories.map((cat) => (
+            <label key={cat.slug} className="flex items-center gap-2 text-sm">
+              <input
+                type="checkbox"
+                checked={filters.categories.includes(cat.slug)}
+                onChange={() => toggleCategory(cat.slug)}
+                className="cursor-pointer"
+              />
+              {cat.name}
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <h3 className="text-sm font-semibold mb-2">Price Range</h3>
+
+        <div className="flex gap-2 mb-2">
+          <input
+            type="number"
+            placeholder="Min"
+            value={price.min}
+            onChange={(e) =>
+              setPrice((prev) => ({ ...prev, min: e.target.value }))
+            }
+            className="w-1/2 h-9 px-2 border border-gray-200 rounded-md bg-white"
+          />
+
+          <input
+            type="number"
+            placeholder="Max"
+            value={price.max}
+            onChange={(e) =>
+              setPrice((prev) => ({ ...prev, max: e.target.value }))
+            }
+            className="w-1/2 h-9 px-2 border border-gray-200 rounded-md bg-white"
+          />
+        </div>
+
+        <button
+          onClick={() =>
+            onFilterChange({
+              minPrice: price.min ? Number(price.min) : undefined,
+              maxPrice: price.max ? Number(price.max) : undefined,
+            })
+          }
+          className="w-full bg-blue-500 text-white text-sm py-2 rounded hover:bg-blue-600 cursor-pointer"
+        >
+          Apply
+        </button>
+      </div>
+
+      <div>
+        <h3 className="text-sm font-semibold mb-2">Brands</h3>
+
+        <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
+          {brands.map((brand) => (
+            <label key={brand} className="flex items-center gap-2 text-sm">
+              <input
+                type="checkbox"
+                checked={filters.brands.includes(brand)}
+                onChange={() => toggleBrand(brand)}
+                className="cursor-pointer"
+              />
+              {brand}
+            </label>
+          ))}
+        </div>
       </div>
     </div>
   );

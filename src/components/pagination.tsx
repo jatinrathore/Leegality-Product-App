@@ -24,7 +24,7 @@ const Pagination = ({ page, totalPages, onPageChange }: Props) => {
   return (
     <div className="flex items-center justify-center gap-2 flex-wrap">
       <button
-        className="px-3 py-1 shadow shadow-gray-400 disabled:cursor-not-allowed cursor-pointer rounded disabled:opacity-50 flex items-center gap-1"
+        className="px-3 py-1 shadow shadow-gray-400 select-none disabled:cursor-not-allowed cursor-pointer rounded disabled:opacity-50 flex items-center gap-1"
         disabled={page <= 1}
         onClick={() => onPageChange(page - 1)}
       >
@@ -45,7 +45,7 @@ const Pagination = ({ page, totalPages, onPageChange }: Props) => {
       ))}
 
       <button
-        className="px-3 py-1 shadow shadow-gray-400 disabled:cursor-not-allowed cursor-pointer rounded disabled:opacity-50 flex items-center gap-1"
+        className="px-3 py-1 shadow shadow-gray-400 select-none disabled:cursor-not-allowed cursor-pointer rounded disabled:opacity-50 flex items-center gap-1"
         disabled={page >= totalPages}
         onClick={() => onPageChange(page + 1)}
       >

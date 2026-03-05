@@ -10,6 +10,12 @@ export type Product = {
   images: string[];
 };
 
+export type ProductCategory = {
+  slug: string;
+  name: string;
+  url: string;
+};
+
 export type PaginatedResponse<T> = {
   products: T[];
   total: number;

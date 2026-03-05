@@ -1,6 +1,6 @@
 import { createQueryKeys } from "@lukemorales/query-key-factory";
 import type { APIFn, PaginatedAPIFn } from "../../utils";
-import type { Product, ProductFilters } from "./types";
+import type { Product, ProductCategory, ProductFilters } from "./types";
 import axios from "../../axios";
 
 export const ProductQueryKey = createQueryKeys("products", {
@@ -20,7 +20,7 @@ export const ProductQueryKey = createQueryKeys("products", {
 type Resource = {
   list: PaginatedAPIFn<Product>;
   detail: APIFn<Product, { id: number | string }>;
-  categories: APIFn<string[]>;
+  categories: APIFn<ProductCategory[]>;
 };
 
 export const ProductResource: Resource = {
