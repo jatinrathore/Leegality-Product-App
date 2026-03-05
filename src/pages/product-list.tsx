@@ -186,7 +186,7 @@ const ProductListPage = () => {
             <AppliedFilters filters={filters} onFilterChange={updateFilters} />
           </div>
 
-          <div className="">
+          <div className="flex flex-col justify-between h-[90%]">
             <div
               className={clsx(
                 "grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4",
@@ -201,22 +201,19 @@ const ProductListPage = () => {
                 Array.from({ length: LIMIT }).map((_, i) => (
                   <ProductCardSkeleton key={i} />
                 ))}
-
               {isEmpty && <EmptyPage />}
-
               {!isLoading &&
                 paginatedProducts.map((product) => (
                   <ProductCard key={product.id} product={product} />
                 ))}
             </div>
-          </div>
-
-          <div className="flex justify-center m-8">
-            <Pagination
-              page={filters.page}
-              totalPages={totalPages}
-              onPageChange={handlePageChange}
-            />
+            <div className="flex justify-center m-8">
+              <Pagination
+                page={filters.page}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
+            </div>
           </div>
         </div>
       </div>

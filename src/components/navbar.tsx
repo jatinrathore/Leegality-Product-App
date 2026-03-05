@@ -10,6 +10,7 @@ import type {
   Product,
   PaginatedResponse,
 } from "../api/resources/product/types";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
   const [search, setSearch] = useState("");
@@ -31,12 +32,13 @@ const NavBar = () => {
   return (
     <nav className="w-full bg-slate-700 min-h-14 flex justify-between items-center px-4 sm:px-8 text-white flex-wrap gap-2 sm:gap-0">
       <div className="flex items-center">
-        <a href="/">
-          <div className="flex items-center font-bold text-lg cursor-pointer gap-2 shrink-0">
-            <ShoppingBag width={22} height={22} />
-            <p className="hidden sm:block">ShopHub</p>
-          </div>
-        </a>
+        <Link
+          to="/"
+          className="flex items-center font-bold text-lg gap-2 shrink-0"
+        >
+          <ShoppingBag width={22} height={22} />
+          <p className="hidden sm:block">ShopHub</p>
+        </Link>
       </div>
 
       <div className="relative w-52 sm:w-105 lg:w-130">
@@ -65,7 +67,7 @@ const NavBar = () => {
             )}
 
             {products.map((product) => (
-              <a href={`/product/${product.id}`} key={product.id}>
+              <Link to={`/product/${product.id}`}>
                 <div
                   onClick={() => {
                     setSearch("");
@@ -78,7 +80,7 @@ const NavBar = () => {
                     {product.description}
                   </p>
                 </div>
-              </a>
+              </Link>
             ))}
           </div>
         )}
