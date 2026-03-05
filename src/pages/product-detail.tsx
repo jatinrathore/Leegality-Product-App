@@ -72,7 +72,7 @@ const ProductDetailPage = () => {
               <ArrowLeft height={16} /> Back
             </button>
             <div className="relative flex flex-col items-center">
-              <div className="relative flex justify-center items-center w-full">
+              <div className="relative flex justify-center items-center w-full min-h-105">
                 <img
                   src={images[imageIndex]}
                   alt={product.title}
