@@ -155,6 +155,12 @@ Applied filters are stored in the URL query parameters. This allows filters to p
 
 ---
 
+7. Preserving Navigation History
+
+Navigation was implemented in a way that preserves the user's browsing history. When a user searches for a product and navigates to its detail page, then searches for another product and navigates again, the browser history stack is maintained correctly. This allows users to use the browser's back button to step through previously visited product pages in the same order they were opened, creating a more natural and intuitive navigation experience.
+
+---
+
 # Improvements If Given More Time
 
 ### 1. Server-side Pagination + Filters
