@@ -193,7 +193,7 @@ const ProductListPage = () => {
           <div className="flex flex-col justify-between h-[90%]">
             <div
               className={clsx(
-                "grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4",
+                "grid items-stretch grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4",
                 {
                   "md:grid-cols-2! lg:grid-cols-3! xl:grid-cols-4!":
                     filtersOpen,

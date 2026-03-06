@@ -9,7 +9,7 @@ type Props = {
 const ProductCard = ({ product }: Props) => {
   return (
     <Link to={`/product/${product.id}`}>
-      <div className="bg-white shadow-md border border-gray-200 rounded-lg p-4 hover:shadow-lg transition cursor-pointer">
+      <div className="bg-white shadow-md border border-gray-200 rounded-lg p-4 hover:shadow-lg transition cursor-pointer flex flex-col h-full">
         <img
           src={product.thumbnail}
           alt={product.title}
