@@ -1,7 +1,9 @@
 # ShopHub Product App
 
-A React-based product browsing application built using **React, TypeScript, React Query, and TailwindCSS**.
+A React-based product browsing application built using **React, TypeScript, React Query, and TailwindCSS**.  
 Users can browse products, filter them, search for products from the navbar, and view detailed product pages.
+
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Open%20App-28a745?style=for-the-badge)](https://leegality-product-app.vercel.app/)
 
 ---
 
@@ -20,22 +22,10 @@ cd leegality-product-app
 npm install
 ```
 
-or
-
-```bash
-yarn install
-```
-
 ## 3. Run the development server
 
 ```bash
 npm run dev
-```
-
-or
-
-```bash
-yarn dev
 ```
 
 The app will run at:
@@ -48,13 +38,7 @@ http://localhost:5173
 
 # Architectural Decisions
 
-### 1. Logo Instead of Menu Icon
-
-The original menu icon was replaced with a **ShopHub logo (ShoppingBag icon + text)** to make the navbar feel more like a real ecommerce product interface.
-
----
-
-### 2. Navbar Search Feature
+### 1. Navbar Search Feature
 
 A search feature was added to the navbar:
 
@@ -65,15 +49,15 @@ A search feature was added to the navbar:
 
 ---
 
-### 3. Client-side Filtering & Pagination
+### 2. Client-side Filtering & Pagination
 
 Initially, backend pagination was considered. However, this created a limitation.
 
-**Problem:**
+**Problem**
 
 - Brand filters depend on available product data.
-- Backend pagination returns only **10 products per request**.
-- This means brand options would be incomplete and filters could behave incorrectly.
+- Backend pagination typically returns a **limited dataset per request (~10–20 products)**.
+- Filters such as **brand and price range** rely on the complete dataset, so paginated responses can lead to incomplete filter options.
 
 Example:
 
@@ -89,9 +73,9 @@ But page 2 contains:
 Sony, Dell
 ```
 
-Then brand filters would be inaccurate.
+Then brand filters derived only from page 1 would be inaccurate.
 
-**Solution:**
+**Solution**
 
 - Fetch **all products once** using:
 
@@ -99,22 +83,34 @@ Then brand filters would be inaccurate.
 limit=0
 ```
 
-- Cache the response using **React Query with 1 hour stale time**.
+- Cache the response using **React Query (1 hour stale time)**.
 - Perform **filtering and pagination on the client side**.
 
-Benefits:
+**Benefits**
 
-- Accurate brand filtering
+- Accurate brand and price filtering
 - Faster UI interactions
 - Reduced API requests
 
 > **Note**
 >
-> Initially, API-based pagination (`limit` and `skip`) was considered. However, the assignment requires extracting **unique brands from the product data** to build the brand filter. With server-side pagination, each request returns only a **limited subset of products**, which means the extracted brands would be incomplete. This would cause filters like **brand and price range** to behave inconsistently.
+> Client-side filtering is generally recommended only for **smaller datasets**. In real-world applications with large or frequently changing data, **backend-driven pagination, filtering, and search would typically be preferred**.
 >
-> One possible approach was to dynamically update the brand list on every page change, but this would make filter options unstable and filtering would only apply to a small dataset.
->
-> Since the DummyJSON dataset is **small and relatively static**, a better approach was to **fetch all products once**, cache them using React Query, and implement **filtering and pagination on the client side**. This ensures filters work on the **complete dataset** and provides faster UI interactions.
+> In this case, the DummyJSON dataset is **small and relatively static**, and the API limitations make it difficult to derive accurate filters from paginated responses. Therefore, fetching the full dataset once and handling filtering and pagination on the client side provides a simpler and more reliable solution for this assignment.
+
+---
+
+### 3. Filters Stored in URL
+
+Filter state is synchronized with **URL query parameters**, making the UI **URL-driven** instead of relying only on in-memory state.
+
+Example:
+
+/products?category=smartphones&brand=apple&minPrice=500&maxPrice=1000
+
+This enables **state persistence, deep linking, and shareable filtered views**. If a user applies filters and shares the URL, another user opening that link will see the **same filtered product results**.
+
+This follows a **configuration-driven UI pattern**, where the interface state is derived from URL parameters, improving reproducibility and navigation behavior.
 
 ---
 
@@ -147,13 +143,7 @@ This improves visibility and usability.
 
 ---
 
-### 6. Filters Stored in URL
-
-Applied filters are stored in the URL query parameters. This allows filters to persist when navigating between pages (for example, visiting a product detail page and returning back). It also enables accurate sharing of filtered product lists through URLs, ensuring that the same filtered state is restored when the link is opened.
-
----
-
-### 7. Preserving Navigation History
+### 6. Preserving Navigation History
 
 Navigation was implemented in a way that preserves the user's browsing history. When a user searches for a product and navigates to its detail page, then searches for another product and navigates again, the browser history stack is maintained correctly. This allows users to use the browser's back button to step through previously visited product pages in the same order they were opened, creating a more natural and intuitive navigation experience.
 

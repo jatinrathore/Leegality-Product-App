@@ -152,6 +152,9 @@ const ProductListPage = () => {
   );
 
   const isLoading = productListQuery.isLoading && !productListQuery.data;
+  const isCategoriesLoading =
+    categoriesQuery.isLoading && !categoriesQuery.data;
+
   const isEmpty = !isLoading && paginatedProducts.length === 0;
 
   return (
@@ -171,6 +174,7 @@ const ProductListPage = () => {
           brands={brands}
           filters={filters}
           onFilterChange={updateFilters}
+          isFiltersLoading={isLoading || isCategoriesLoading}
         />
 
         <div>

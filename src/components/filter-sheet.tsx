@@ -2,6 +2,7 @@ import clsx from "clsx";
 import { Search, Xmark } from "iconoir-react";
 import type { ProductCategory } from "../api/resources/product/types";
 import { useEffect, useState } from "react";
+import FilterSkeleton from "./skeletons/filter";
 
 type Filters = {
   search: string;
@@ -19,6 +20,7 @@ type Props = {
   brands: string[];
   filters: Filters;
   onFilterChange: (updates: Partial<Filters>) => void;
+  isFiltersLoading: boolean;
 };
 
 const FilterSheet = ({
@@ -28,6 +30,7 @@ const FilterSheet = ({
   brands,
   filters,
   onFilterChange,
+  isFiltersLoading,
 }: Props) => {
   const [price, setPrice] = useState<{ min: string; max: string }>({
     min: filters.minPrice?.toString() ?? "",
@@ -87,28 +90,38 @@ const FilterSheet = ({
 
         <input
           type="text"
+          disabled={isFiltersLoading}
           placeholder="Search products..."
           value={filters.search}
           onChange={(e) => onFilterChange({ search: e.target.value })}
-          className="h-9 w-full pl-9 pr-3 border border-gray-200 rounded-md text-black outline-none bg-white"
+          className="disabled:bg-gray-300 h-9 w-full pl-9 pr-3 border border-gray-200 rounded-md text-black outline-none bg-white"
         />
       </div>
 
       <div>
         <h3 className="text-sm font-semibold mb-2">Categories</h3>
 
-        <div className="space-y-2 max-h-40 overflow-y-auto pr-1">
-          {categories.map((cat) => (
-            <label key={cat.slug} className="flex items-center gap-2 text-sm">
-              <input
-                type="checkbox"
-                checked={filters.categories.includes(cat.slug)}
-                onChange={() => toggleCategory(cat.slug)}
-                className="cursor-pointer"
-              />
-              {cat.name}
-            </label>
-          ))}
+        <div className="max-h-40 overflow-y-auto pr-1">
+          {isFiltersLoading ? (
+            <FilterSkeleton rows={6} />
+          ) : (
+            <div className="space-y-2">
+              {categories.map((cat) => (
+                <label
+                  key={cat.slug}
+                  className="flex items-center gap-2 text-sm"
+                >
+                  <input
+                    type="checkbox"
+                    checked={filters.categories.includes(cat.slug)}
+                    onChange={() => toggleCategory(cat.slug)}
+                    className="cursor-pointer"
+                  />
+                  {cat.name}
+                </label>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
@@ -119,21 +132,23 @@ const FilterSheet = ({
           <input
             type="number"
             placeholder="Min"
+            disabled={isFiltersLoading}
             value={price.min}
             onChange={(e) =>
               setPrice((prev) => ({ ...prev, min: e.target.value }))
             }
-            className="w-1/2 h-9 px-2 border border-gray-200 rounded-md bg-white"
+            className="w-1/2 h-9 px-2 border border-gray-200 rounded-md bg-white disabled:bg-gray-300"
           />
 
           <input
             type="number"
             placeholder="Max"
+            disabled={isFiltersLoading}
             value={price.max}
             onChange={(e) =>
               setPrice((prev) => ({ ...prev, max: e.target.value }))
             }
-            className="w-1/2 h-9 px-2 border border-gray-200 rounded-md bg-white"
+            className="w-1/2 h-9 px-2 border border-gray-200 rounded-md bg-white disabled:bg-gray-300"
           />
         </div>
 
@@ -144,7 +159,8 @@ const FilterSheet = ({
               maxPrice: price.max ? Number(price.max) : undefined,
             })
           }
-          className="w-full bg-blue-500 text-white text-sm py-2 rounded hover:bg-blue-600 cursor-pointer"
+          disabled={isFiltersLoading}
+          className="w-full bg-blue-500 text-white text-sm py-2 rounded hover:bg-blue-600 cursor-pointer disabled:bg-gray-400"
         >
           Apply
         </button>
@@ -153,18 +169,24 @@ const FilterSheet = ({
       <div>
         <h3 className="text-sm font-semibold mb-2">Brands</h3>
 
-        <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
-          {brands.map((brand) => (
-            <label key={brand} className="flex items-center gap-2 text-sm">
-              <input
-                type="checkbox"
-                checked={filters.brands.includes(brand)}
-                onChange={() => toggleBrand(brand)}
-                className="cursor-pointer"
-              />
-              {brand}
-            </label>
-          ))}
+        <div className="max-h-60 overflow-y-auto pr-1">
+          {isFiltersLoading ? (
+            <FilterSkeleton rows={8} />
+          ) : (
+            <div className="space-y-2">
+              {brands.map((brand) => (
+                <label key={brand} className="flex items-center gap-2 text-sm">
+                  <input
+                    type="checkbox"
+                    checked={filters.brands.includes(brand)}
+                    onChange={() => toggleBrand(brand)}
+                    className="cursor-pointer"
+                  />
+                  {brand}
+                </label>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
