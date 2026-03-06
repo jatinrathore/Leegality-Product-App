@@ -46,16 +46,6 @@ http://localhost:5173
 
 ---
 
-# Assumptions Made
-
-- The product API used is **DummyJSON**.
-- All products are fetched with `limit=0` to allow **client-side filtering and pagination**.
-- The dataset is assumed to be reasonably small so that client-side operations remain performant.
-- Product **brand information is derived from the product dataset**, since the API does not provide a dedicated endpoint for brands.
-- Navigation between product pages is handled using **React Router**.
-
----
-
 # Architectural Decisions
 
 ### 1. Logo Instead of Menu Icon
@@ -118,6 +108,14 @@ Benefits:
 - Faster UI interactions
 - Reduced API requests
 
+> **Note**
+>
+> Initially, API-based pagination (`limit` and `skip`) was considered. However, the assignment requires extracting **unique brands from the product data** to build the brand filter. With server-side pagination, each request returns only a **limited subset of products**, which means the extracted brands would be incomplete. This would cause filters like **brand and price range** to behave inconsistently.
+>
+> One possible approach was to dynamically update the brand list on every page change, but this would make filter options unstable and filtering would only apply to a small dataset.
+>
+> Since the DummyJSON dataset is **small and relatively static**, a better approach was to **fetch all products once**, cache them using React Query, and implement **filtering and pagination on the client side**. This ensures filters work on the **complete dataset** and provides faster UI interactions.
+
 ---
 
 ### 4. Sliding Filter Sheet
@@ -163,20 +161,7 @@ Navigation was implemented in a way that preserves the user's browsing history. 
 
 # Improvements If Given More Time
 
-### 1. Server-side Pagination + Filters
-
-Implement a backend filtering strategy that supports:
-
-- pagination
-- brand filtering
-- category filtering
-- price filtering
-
-This would allow large-scale datasets without loading all products.
-
----
-
-### 2. Search Enhancements
+### 1. Search Enhancements
 
 Improve the navbar search with:
 
@@ -184,7 +169,7 @@ Improve the navbar search with:
 - product thumbnails
 - recent searches
 
-### 3. UI Enhancements
+### 2. UI Enhancements
 
 - Better shimmer loading UI for images to prevent empty boxes and improve perceived loading experience.
 - Smooth animations for filters
