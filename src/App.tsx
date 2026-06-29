@@ -5,8 +5,12 @@ import AppRouter from "./router/app-router";
 const App = () => {
   return (
     <BrowserRouter>
-      <NavBar />
-      <AppRouter />
+      <div className="min-h-screen flex flex-col">
+        <NavBar />
+        <main className="flex-1">
+          <AppRouter />
+        </main>
+      </div>
     </BrowserRouter>
   );
 };
