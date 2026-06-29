@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- Rounded rectangle background with indigo color matching our theme -->
+  <rect width="32" height="32" rx="8" fill="#4f46e5"/>
+  <!-- Shopping bag icon in white -->
+  <path d="M10 9L7 13v11a2 2 0 002 2h14a2 2 0 002-2V13l-3-4H10z" fill="white" opacity="0.95"/>
+  <path d="M11 9h10l1.5 4H9.5L11 9z" fill="#312e81" opacity="0.3"/>
+  <path d="M21 16a5 5 0 01-10 0" stroke="#4f46e5" stroke-width="2" stroke-linecap="round"/>
+</svg>
